@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Proxette</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    $(function () {
+      var socket = io();
+
+      socket.on('trigger-call', function (options) {
+        const { uri, method, headers, body, guid } = options;
+        console.info({options});
+        fetch(uri, { method, headers, body })
+          .then(response => response.text())
+          .then(data => {
+            console.info({ data});
+            socket.emit('trigger-answer', { data, guid });
+          });
+      });
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
