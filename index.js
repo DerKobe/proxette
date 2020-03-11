@@ -51,21 +51,20 @@ http.listen(port, "0.0.0.0", function () {
 });
 
 class Call {
-  constructor({ guid, host, originalUrl, protocol, method, headers, body }) {
+  constructor({ guid, host, originalUrl, method, headers, body }) {
     this.guid = guid;
     this.headers = headers;
     this.body = body;
     this.originalUrl = originalUrl;
     this.host = host;
-    this.protocol = protocol;
     this.method = method;
     this.data = null;
     this.callComplete = false;
   }
 
   run() {
-    const { guid, host, originalUrl, protocol, method, headers, body } = this;
-    const options = { guid, host, protocol, originalUrl, method, headers, body };
+    const { guid, host, originalUrl, method, headers, body } = this;
+    const options = { guid, host, originalUrl, method, headers, body };
     io.emit('trigger-call', options);
 
     this.blocker = new Promise(resolve => {
