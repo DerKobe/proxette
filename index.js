@@ -35,6 +35,7 @@ app.put('*', handler);
 app.delete('*', handler);
 app.options('*', handler);
 app.patch('*', handler);
+app.connect('*', handler);
 
 io.on('connection', function (socket) {
   console.log('a user connected');
