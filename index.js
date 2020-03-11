@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const calls = [];
 
-app.get('/start-proxette', function (req, res) {
+app.get('/joyride', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
