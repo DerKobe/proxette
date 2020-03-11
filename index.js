@@ -15,7 +15,7 @@ const handler = async function (req, res) {
   const method = req.method;
   const protocol = req.protocol;
   const guid = uuidv4();
-  const { host, ...headers } = req.headers;
+  const { host, referer, ...headers } = req.headers;
 
   const params = { guid, host, originalUrl, method, protocol, headers, body };
   console.info({ params });
@@ -25,7 +25,7 @@ const handler = async function (req, res) {
 
   const response = await calls[guid].blocker;
 
-  return response;
+  res.send(response);
 };
 
 app.get('*', handler);
