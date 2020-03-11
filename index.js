@@ -9,7 +9,7 @@ app.get('/joyride', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-const handler = async function (req, res) {
+app.all('*', async function (req, res) {
   const originalUrl = req.originalUrl;
   const body = req.body;
   const method = req.method;
@@ -26,16 +26,7 @@ const handler = async function (req, res) {
   const response = await calls[guid].blocker;
 
   res.send(response);
-};
-
-app.get('*', handler);
-app.post('*', handler);
-app.head('*', handler);
-app.put('*', handler);
-app.delete('*', handler);
-app.options('*', handler);
-app.patch('*', handler);
-app.connect('*', handler);
+});
 
 io.on('connection', function (socket) {
   console.log('a user connected');
