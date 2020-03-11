@@ -9,14 +9,6 @@ app.get('/joyride', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('*', handler);
-app.post('*', handler);
-app.head('*', handler);
-app.put('*', handler);
-app.delete('*', handler);
-app.options('*', handler);
-app.patch('*', handler);
-
 const handler = async function (req, res) {
   const headers = req.headers;
   const body = req.body;
@@ -34,6 +26,15 @@ const handler = async function (req, res) {
 
   return response;
 };
+
+
+app.get('*', handler);
+app.post('*', handler);
+app.head('*', handler);
+app.put('*', handler);
+app.delete('*', handler);
+app.options('*', handler);
+app.patch('*', handler);
 
 io.on('connection', function (socket) {
   console.log('a user connected');
