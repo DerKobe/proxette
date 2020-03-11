@@ -10,13 +10,12 @@ app.get('/joyride', function (req, res) {
 });
 
 const handler = async function (req, res) {
-  const host = req.headers.host;
-  const headers = req.headers;
   const originalUrl = req.originalUrl;
   const body = req.body;
   const method = req.method;
   const protocol = req.protocol;
   const guid = uuidv4();
+  const { host, ...headers } = req.headers;
 
   const params = { guid, host, originalUrl, method, protocol, headers, body };
   console.info({ params });
