@@ -10,13 +10,15 @@ app.get('/joyride', function (req, res) {
 });
 
 const handler = async function (req, res) {
+  const host = req.headers.host;
   const headers = req.headers;
+  const originalUrl = req.originalUrl;
   const body = req.body;
   const method = req.method;
-  const uri = req.uri;
+  const protocol = req.protocol;
   const guid = uuidv4();
 
-  const params = { guid, uri, method, headers, body };
+  const params = { guid, host, originalUrl, method, protocol, headers, body };
   console.info({ params });
 
   calls[guid] = new Call(params);
@@ -26,7 +28,6 @@ const handler = async function (req, res) {
 
   return response;
 };
-
 
 app.get('*', handler);
 app.post('*', handler);
@@ -51,19 +52,21 @@ http.listen(port, function () {
 });
 
 class Call {
-  constructor({ guid, uri, method, headers, body }) {
+  constructor({ guid, host, originalUrl, protocol, method, headers, body }) {
     this.guid = guid;
     this.headers = headers;
     this.body = body;
-    this.uri = uri;
+    this.originalUrl = originalUrl;
+    this.host = host;
+    this.protocol = protocol;
     this.method = method;
     this.data = null;
     this.callComplete = false;
   }
 
   run() {
-    const { guid, uri, method, headers, body } = this;
-    const options = { guid, uri, headers, method, body };
+    const { guid, host, originalUrl, protocol, method, headers, body } = this;
+    const options = { guid, host, protocol, originalUrl, method, headers, body };
     io.emit('trigger-call', options);
 
     this.blocker = new Promise(resolve => {
