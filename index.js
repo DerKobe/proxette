@@ -36,9 +36,9 @@ io.on('connection', function (socket) {
   });
 });
 
-
-http.listen(process.env.PORT, function () {
-  console.log(`listening on ${process.env.PORT}`);
+const port = process.env.PORT || 5000;
+http.listen(port, function () {
+  console.log(`listening on ${port}`);
 });
 
 class Call {
