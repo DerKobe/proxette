@@ -11,7 +11,7 @@
       socket.on('trigger-call', function (options) {
         const { guid, host, protocol, originalUrl, method, headers, body } = options;
         console.info({ options });
-        fetch(`https://${host}${originalUrl}`, { method, headers, body })
+        fetch(`https://${host}${originalUrl}`, { method, body })
           .then(response => response.text())
           .then(data => {
             console.info({ data });
